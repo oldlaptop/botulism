@@ -1,0 +1,15 @@
+botulism: irc bot caused by improperly preserved shell script
+
+This is a fairly simple IRC bot, meant to be used with the ii filesystem-based
+IRC client. Currently included functionality depends on fortune(6), dc(1), the
+mpc MPD client, weather(1) from the Debian package weather-utils, and the
+reference implementation of the dict(1) client. Apart from this, the code should
+run on any reasonably POSIX-compliant system.
+
+There are multiple known security issues, and probably other unknown ones.
+Removing or modifying the .dc command is needed to prevent DoS, and the .giveup
+command only exists for debugging purposes and should not be run in any public
+channel.
+
+Other ii bots are probably much cleaner, this one has the advantage of being
+pure POSIX sh (and the advantage for me that I understand its internals ;) ).
