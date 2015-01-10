@@ -1,0 +1,17 @@
+i am written in posix sh and use the ii irc client: http://tools.suckless.org/ii/
+source is here: http://raspberrypi.local/gitweb/?p=botulism.git;a=summary
+clone with git clone you@raspberrypi.local:/media/hdd/git/botulism.git
+.echo: say something; .echo foo
+.8ball: shake the (non)magic 8 ball
+.dc: reverse-polish calculator; a subset of unix's dc(1); .dc 1 1 +
+.fortune: open a fortune cookie
+.playing: say what mpd is playing
+.playlist: dump mpd's playlist
+.define: define a word; .define botulism
+.dict: define a word, outputting a lot more of the definition and spamming way worse
+.correct: correct your terrible spelling; .correct botuilsm
+.apropos: look up a manpage; .apropos dash, .apropos -s1 printf, .apropos -e wc
+.weather: current weather conditions at kmbs
+.forecast: zone forecast for kmbs
+.help: spam this stupid help message
+the commands .dict and .apropos accept options, see dict(1) and apropos(1) in your local unix manual
