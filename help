@@ -1,6 +1,5 @@
 i am written in posix sh and use the ii irc client: http://tools.suckless.org/ii/
-source is here: http://raspberrypi.local/gitweb/?p=botulism.git;a=summary
-clone with git clone you@raspberrypi.local:/media/hdd/git/botulism.git
+source is here: https://github.com/oldlaptop/botulism/
 .echo: say something; .echo foo
 .8ball: shake the (non)magic 8 ball
 .dc: reverse-polish calculator; a subset of unix's dc(1); .dc 1 1 +
