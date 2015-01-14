@@ -26,6 +26,12 @@ cmdeval ()
 		".8ball")
 			writeout "$(fortune pseudo-fortunes/8ball)"
 			;;
+		".drink")
+			writeout "${MYNICK} slides ${NICK} a $(fortune pseudo-fortunes/noun-beverage)"
+			;;
+		".slap")
+			writeout "${MYNICK} $(fortune pseudo-fortunes/verb-slap) ${2:-${NICK}} with a $(fortune pseudo-fortunes/noun-slap)"
+			;;
 		".dc")
 			# This command is at *least* a DoS vulnerability,
 			# imagine the effect of '.dc 1000000000000k 2v' or so

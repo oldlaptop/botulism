@@ -2,6 +2,8 @@ i am written in posix sh and use the ii irc client: http://tools.suckless.org/ii
 source is here: https://github.com/oldlaptop/botulism/
 .echo: say something; .echo foo
 .8ball: shake the (non)magic 8 ball
+.drink: serve a drink
+.slap: slap somebody
 .dc: reverse-polish calculator; a subset of unix's dc(1); .dc 1 1 +
 .fortune: open a fortune cookie
 .playing: say what mpd is playing
