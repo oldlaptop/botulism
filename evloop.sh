@@ -27,7 +27,7 @@ cmdeval ()
 			writeout "$(fortune pseudo-fortunes/8ball)"
 			;;
 		".drink")
-			writeout "${MYNICK} slides ${NICK} a $(fortune pseudo-fortunes/noun-beverage)"
+			writeout "${MYNICK} slides ${2:-${NICK}} a $(fortune pseudo-fortunes/noun-beverage)"
 			;;
 		".slap")
 			writeout "${MYNICK} $(fortune pseudo-fortunes/verb-slap) ${2:-${NICK}} with a $(fortune pseudo-fortunes/noun-slap)"
