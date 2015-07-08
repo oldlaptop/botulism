@@ -27,15 +27,21 @@ cmdeval ()
 			writeout "$(fortune pseudo-fortunes/8ball)"
 			;;
 		".drink")
-			writeout "${MYNICK} slides ${2:-${NICK}} a $(fortune pseudo-fortunes/noun-beverage)"
+			RECIPIENT=${allargs##".drink"}
+			writeout "${MYNICK} slides${RECIPIENT:- ${NICK}} $(fortune pseudo-fortunes/noun-beverage)"
 			;;
 		".slap")
-			writeout "${MYNICK} $(fortune pseudo-fortunes/verb-slap) ${2:-${NICK}} with a $(fortune pseudo-fortunes/noun-slap)"
+			VICTIM=${allargs##".slap"}
+			writeout "${MYNICK} $(fortune pseudo-fortunes/verb-slap)${VICTIM:- ${NICK}} with $(fortune pseudo-fortunes/noun-slap)"
 			;;
 		".dc")
-			# This command is at *least* a DoS vulnerability,
-			# imagine the effect of '.dc 1000000000000k 2v' or so
-			writeout "$(printf "%s" "${allargs##".dc "}p" | dc)"
+			# Further sanitization. We will hardcode precision, therefore k is
+			# unnneeded (and represents a DoS vulnerability, consider something
+			# like '100000000000000000k 2v'). Similarly, manual p makes no sense
+			# and represents a spam amplification vulnerability (imagine, say,
+			# 2vppppppppppppppppppp).
+			EXPR="16k "$(printf "%s" "${allargs##'.dc '}" | tr -d 'pk')" p"
+			writeout "$(printf "%s" "${EXPR}" | dc)"
 			;;
 		".fortune")
 			fortune
