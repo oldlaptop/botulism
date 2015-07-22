@@ -16,3 +16,4 @@ source is here: https://github.com/oldlaptop/botulism/
 .forecast: zone forecast for kmbs
 .help: spam this stupid help message
 the commands .dict and .apropos accept options, see dict(1) and apropos(1) in your local unix manual
+or for specific help, the manual for the unix I'm running on:

@@ -91,6 +91,7 @@ cmdeval ()
 			;;
 		".help")
 			cat help
+			uname -sr
 			;;
 		".giveup")
 			# Another command you don't want in a public channel
