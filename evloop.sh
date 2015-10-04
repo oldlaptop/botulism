@@ -24,15 +24,15 @@ cmdeval ()
 			writeout "${allargs##".echo "}"
 			;;
 		".8ball")
-			writeout "$(fortune pseudo-fortunes/8ball)"
+			writeout "$(fortune "${PREFIX}/pseudo-fortunes/8ball")"
 			;;
 		".drink")
 			RECIPIENT=${allargs##".drink"}
-			writeout "${MYNICK} slides${RECIPIENT:- ${NICK}} $(fortune pseudo-fortunes/noun-beverage)"
+			writeout "${MYNICK} slides${RECIPIENT:- ${NICK}} $(fortune "${PREFIX}/pseudo-fortunes/noun-beverage")"
 			;;
 		".slap")
 			VICTIM=${allargs##".slap"}
-			writeout "${MYNICK} $(fortune pseudo-fortunes/verb-slap)${VICTIM:- ${NICK}} with $(fortune pseudo-fortunes/noun-slap)"
+			writeout "${MYNICK} $(fortune "${PREFIX}/pseudo-fortunes/verb-slap")${VICTIM:- ${NICK}} with $(fortune "${PREFIX}/pseudo-fortunes/noun-slap")"
 			;;
 		".dc")
 			# Further sanitization. We will hardcode precision, therefore k is
@@ -75,14 +75,14 @@ cmdeval ()
 			# to a minute in CPython, and about half that in PyPy).
 			# We accordingly run it in the background, so botulism
 			# can respond to events while it spins.
-			writeout "$(fortune pseudo-fortunes/waiting)"
+			writeout "$(fortune "${PREFIX}/pseudo-fortunes/waiting")"
 			weather kmbs & 2>&1
 			;;
 		".forecast")
 			# TODO: It's still slow here, but because of all our
 			# postprocessing, it's not convenient to run in the
 			# background.
-			writeout "$(fortune pseudo-fortunes/waiting)"
+			writeout "$(fortune "${PREFIX}/pseudo-fortunes/waiting")"
 
 			weather -fn kmbs > /tmp/wxlog
 			cat /tmp/wxlog | tr [A-Z] [a-z] | tail -n $(( $(wc -l < /tmp/wxlog) - 5 )) | head -n20
@@ -90,7 +90,7 @@ cmdeval ()
 			rm /tmp/wxlog
 			;;
 		".help")
-			cat help
+			cat "${PREFIX}/help"
 			uname -sr
 			;;
 		".giveup")
@@ -99,7 +99,7 @@ cmdeval ()
 			exit 0
 			;;
 		*)
-			writeout "invalid command, $(fortune pseudo-fortunes/lusernames)"
+			writeout "invalid command, $(fortune "${PREFIX}/pseudo-fortunes/lusernames")"
 			;;
 	esac
 }
@@ -144,13 +144,13 @@ do
 
 		case "${ACTION}" in
 			"joined")
-				writeout "hello, $(fortune pseudo-fortunes/lusernames)"
+				writeout "hello, $(fortune "${PREFIX}/pseudo-fortunes/lusernames")"
 				;;
 			"left")
-				writeout "$(fortune pseudo-fortunes/parting-shots)"
+				writeout "$(fortune "${PREFIX}/pseudo-fortunes/parting-shots")"
 				;;
 			"quit")
-				writeout "$(fortune pseudo-fortunes/parting-shots)"
+				writeout "$(fortune "${PREFIX}/pseudo-fortunes/parting-shots")"
 				;;
 			*)
 				;;
