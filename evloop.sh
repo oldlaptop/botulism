@@ -18,7 +18,7 @@ cmdeval ()
 	set -- ${1}
 	set +f
 
-	allargs="${@}" # most commands need to strip ${0} with ${FOO##"bar"} or so
+	allargs="${*}" # most commands need to strip ${0} with ${FOO##"bar"} or so
 	case "${1}" in
 		".echo")
 			writeout "${allargs##".echo "}"
@@ -27,11 +27,11 @@ cmdeval ()
 			writeout "$(fortune "${PREFIX}/pseudo-fortunes/8ball")"
 			;;
 		".drink")
-			RECIPIENT=${allargs##".drink"}
+			RECIPIENT="${allargs##".drink"}"
 			writeout "${MYNICK} slides${RECIPIENT:- ${NICK}} $(fortune "${PREFIX}/pseudo-fortunes/noun-beverage")"
 			;;
 		".slap")
-			VICTIM=${allargs##".slap"}
+			VICTIM="${allargs##".slap"}"
 			writeout "${MYNICK} $(fortune "${PREFIX}/pseudo-fortunes/verb-slap")${VICTIM:- ${NICK}} with $(fortune "${PREFIX}/pseudo-fortunes/noun-slap")"
 			;;
 		".dc")
@@ -40,7 +40,7 @@ cmdeval ()
 			# like '100000000000000000k 2v'). Similarly, manual p makes no sense
 			# and represents a spam amplification vulnerability (imagine, say,
 			# 2vppppppppppppppppppp).
-			EXPR="16k "$(printf "%s" "${allargs##'.dc '}" | tr -d 'pk')" p"
+			EXPR=16k "$(printf "%s" "${allargs##'.dc '}" | tr -d 'pk')" p
 			writeout "$(printf "%s" "${EXPR}" | dc)"
 			;;
 		".fortune")
@@ -54,20 +54,26 @@ cmdeval ()
 			;;
 		".define")
 			# doesn't permit arbitrary args
-			dargs="$(printf "%s" ${allargs##".define "} | tr -d '-')"
+			dargs="$(printf "%s" "${allargs##.define }" | tr -d '-')"
 			writeout "$(dict -d! "${dargs}" 2>&1)"
 			;;
 		".dict")
-			# permits arbitrary args to dict(1), deliberately unquoted
+			# permits arbitrary args to dict(1), deliberately
+			# unquoted, but no globs for you
+			set -f
 			dict ${allargs##".dict "} 2>&1| head -n20
+			set +f
 			;;
 		".correct")
 			dargs="$(printf "%s" "${allargs##".correct "}" | tr -d '-')"
 			writeout "$(dict -m "${dargs}" 2>&1)"
 			;;
 		".apropos")
-			# permits arbitrary args to apropos(1), deliberately unquoted
+			# permits arbitrary args to apropos(1), deliberately
+			# unquoted, but no globs for you
+			set -f
 			apropos ${allargs##".apropos "} 2>&1 | head -n5
+			set +f
 			;;
 		".weather")
 			# weather(1) from weather-util is disgustingly slow on
@@ -85,7 +91,7 @@ cmdeval ()
 			writeout "$(fortune "${PREFIX}/pseudo-fortunes/waiting")"
 
 			weather -fn kmbs > /tmp/wxlog
-			cat /tmp/wxlog | tr [A-Z] [a-z] | tail -n $(( $(wc -l < /tmp/wxlog) - 5 )) | head -n20
+			cat | tr '[:upper:]' '[:lower:]' | tail -n $(( $(wc -l < /tmp/wxlog) - 5 )) | head -n20
 			                                          # outer $(( ... )) is arithmetic
 			rm /tmp/wxlog
 			;;
@@ -114,7 +120,7 @@ do
 	MSG="@none@"
 
 	# Get input
-	read LINE
+	read -r LINE
 
 	# Sanitize input
 	set -f
@@ -122,7 +128,7 @@ do
 	set +f
 
 	# Parse input
-	allargs="${@}"
+	allargs="${*}"
 
 	DATE="${1}"
 	TIME="${2}"
@@ -130,7 +136,7 @@ do
 	MSG="${allargs##"${DATE} ${TIME} ${NICK}"}"
 
 	# if message is a dotcommand and is not from the bot
-	if [ "${NICK}" != "${MYNICK}" -a "$(echo ${MSG} | grep '^\.')" ]
+	if [ "${NICK}" != "${MYNICK}" ] && [ "$(echo ${MSG} | grep '^\.')" ]
 	then                              # quotes around ${MSG} break it
 		cmdeval "${MSG}"
 	fi

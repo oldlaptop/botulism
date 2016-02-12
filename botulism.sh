@@ -5,9 +5,10 @@
 IRCDIR="${HOME}/botulism-irc"
 SERVER="localhost"
 CHANNELS="#chat"
+MYNICK="botulism"
+STATUSNICK="--" # actually -!-, but we sanitize the !
 
-export MYNICK="botulism"
-export STATUSNICK="--" # actually -!-, but we sanitize the !
+export MYNICK STATUSNICK
 
 # Make sure our path is complete
 export PATH="${PATH}:/usr/games"
@@ -40,7 +41,7 @@ do
 done
 
 # Idle, waiting to be SIGTERMed
-trap die TERM
+trap die EXIT
 wait
 
 # All event loops are dead
